@@ -847,8 +847,6 @@ func generateMarshalMethods(genD *ast.GenDecl, structName string, commList []str
 func main() {
 	flag.Parse()
 
-	log.SetLevel(log.TraceLevel)
-
 	files := flag.Args()
 
 	for _, fname := range files {
