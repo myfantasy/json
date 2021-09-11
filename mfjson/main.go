@@ -320,7 +320,7 @@ func generateMarshalArrayMethods(arrType *ast.ArrayType, structName string, comm
 
 	log.Tracef("Array `%v` gen", structName)
 
-	newStructName := structName + "_mjson_wrap"
+	newStructName := structName + "_mfjson_wrap"
 
 	var fieldType string
 	var fieldRawType string
@@ -438,7 +438,7 @@ func generateMarshalMapMethods(mapType *ast.MapType, structName string, commList
 
 	log.Tracef("Map `%v` gen", structName)
 
-	newStructName := structName + "_mjson_wrap"
+	newStructName := structName + "_mfjson_wrap"
 
 	var fieldType string
 	var fieldRawType string
@@ -548,7 +548,7 @@ func generateMarshalMapMethods(mapType *ast.MapType, structName string, commList
 func generateMarshalMethods(genD *ast.GenDecl, structName string, commList []string) (text string, usedInputs map[string]struct{}) {
 	usedInputs = make(map[string]struct{})
 
-	newStructName := structName + "_mjson_wrap"
+	newStructName := structName + "_mfjson_wrap"
 
 	prefixStruct := ""
 	for _, v := range commList {

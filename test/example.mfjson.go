@@ -14,7 +14,7 @@ import (
 )
 
 //easyjson:json
-type Example_mjson_wrap struct {
+type Example_mfjson_wrap struct {
 	A int `json:"id"`
 
 	B int64
@@ -54,7 +54,7 @@ type Example_mjson_wrap struct {
 }
 
 func (obj Example) MarshalJSON() (res []byte, err error) {
-	out := Example_mjson_wrap{}
+	out := Example_mfjson_wrap{}
 	out.A = obj.A
 	out.B = obj.B
 	{
@@ -152,7 +152,7 @@ func (obj Example) MarshalJSON() (res []byte, err error) {
 	return json.Marshal(out)
 }
 func (obj *Example) UnmarshalJSON(data []byte) (err error) {
-	tmp := Example_mjson_wrap{}
+	tmp := Example_mfjson_wrap{}
 	if data == nil {
 		return nil
 	}
@@ -388,14 +388,14 @@ func (obj *Example) UnmarshalJSON(data []byte) (err error) {
 	return nil
 }
 
-type AasList_mjson_wrap []mfj.IStructView
+type AasList_mfjson_wrap []mfj.IStructView
 
 func (obj AasList) MarshalJSON() (res []byte, err error) {
 	if obj == nil {
-		var out AasList_mjson_wrap
+		var out AasList_mfjson_wrap
 		return json.Marshal(out)
 	}
-	out := make(AasList_mjson_wrap, len(obj))
+	out := make(AasList_mfjson_wrap, len(obj))
 	swl := make([]mfj.IStructView, len(obj))
 	for i := 0; i < len(obj); i++ {
 		if ujo, ok := obj[i].(mfj.JsonInterfaceMarshaller); ok {
@@ -414,7 +414,7 @@ func (obj *AasList) UnmarshalJSON(data []byte) (err error) {
 	if data == nil {
 		return nil
 	}
-	var tmp AasList_mjson_wrap
+	var tmp AasList_mfjson_wrap
 	err = json.Unmarshal(data, &tmp)
 	if err != nil {
 		return err
@@ -459,14 +459,14 @@ func (obj *AasList) UnmarshalJSON(data []byte) (err error) {
 }
 
 //easyjson:json
-type AasMap_mjson_wrap map[string]mfj.IStructView
+type AasMap_mfjson_wrap map[string]mfj.IStructView
 
 func (obj AasMap) MarshalJSON() (res []byte, err error) {
 	if obj == nil {
-		var out AasMap_mjson_wrap
+		var out AasMap_mfjson_wrap
 		return json.Marshal(out)
 	}
-	out := make(AasMap_mjson_wrap, len(obj))
+	out := make(AasMap_mfjson_wrap, len(obj))
 	swl := make(map[string]mfj.IStructView, len(obj))
 	for k, v := range obj {
 		if ujo, ok := v.(mfj.JsonInterfaceMarshaller); ok {
@@ -485,7 +485,7 @@ func (obj *AasMap) UnmarshalJSON(data []byte) (err error) {
 	if data == nil {
 		return nil
 	}
-	var tmp AasMap_mjson_wrap
+	var tmp AasMap_mfjson_wrap
 	err = json.Unmarshal(data, &tmp)
 	if err != nil {
 		return err
