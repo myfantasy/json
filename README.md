@@ -3,7 +3,6 @@ The mfjson package provides marshal/unmarshal for objects containing interface f
 `mfjson` generates `<file>.mfjson.go` file. The file contains proxy structs for marshaling struct.
 
 ## Attributes
-`//mfjson:interface` - Marks struct for add to generator
 `//mfjson:interface some_name` - Marks struct for add to generator with name `some_name`
 
 `//mfjson:add //easyjson:json` - Add additional comment to proxy class
@@ -30,7 +29,7 @@ type TestInt1 interface {
 }
 
 // Generate registaration struct in generator
-//mfjson:interface
+//mfjson:interface b_test_struct
 type B struct {
 	A string
 	B float64
