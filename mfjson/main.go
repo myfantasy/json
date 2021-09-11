@@ -349,7 +349,7 @@ func generateMarshalArrayMethods(arrType *ast.ArrayType, structName string, comm
 		prefixStruct += v + "\n"
 	}
 
-	structText := prefixStruct + fmt.Sprintf("type %v []mfj.IStructView\n", newStructName)
+	structText := prefixStruct + fmt.Sprintf("type %v []mfj.IStructView\n\n", newStructName)
 
 	marshalText := fmt.Sprintf(`func (obj %v) MarshalJSON() (res []byte, err error) {
 	if obj == nil {
@@ -461,7 +461,7 @@ func generateMarshalMapMethods(mapType *ast.MapType, structName string, commList
 		prefixStruct += v + "\n"
 	}
 
-	structText := prefixStruct + fmt.Sprintf("type %v map[%v]mfj.IStructView\n", newStructName, mapKeyType)
+	structText := prefixStruct + fmt.Sprintf("type %v map[%v]mfj.IStructView\n\n", newStructName, mapKeyType)
 
 	marshalText := fmt.Sprintf(`func (obj %v) MarshalJSON() (res []byte, err error) {
 	if obj == nil {
