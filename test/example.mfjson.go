@@ -7,7 +7,7 @@ import (
 	"encoding/json"
 
 	"github.com/myfantasy/mft"
-	
+
 	mfj "github.com/myfantasy/json"
 
 	log "github.com/sirupsen/logrus"
@@ -54,8 +54,8 @@ type Example_mjson_wrap struct {
 
 	// Q TestInt2 `json:"q" mfjson:"true"`
 	Q mfj.IStructView `json:"q" mfjson:"true"`
-
 }
+
 func (obj Example) MarshalJSON() (res []byte, err error) {
 	out := Example_mjson_wrap{}
 	out.A = obj.A

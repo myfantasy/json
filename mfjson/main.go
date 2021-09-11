@@ -143,7 +143,7 @@ import (
 	"encoding/json"
 
 	"github.com/myfantasy/mft"
-	
+
 	mfj "github.com/myfantasy/json"
 
 `
@@ -178,7 +178,8 @@ import (
 		outFile += fmt.Sprintf(`
 
 func init() {%v
-}`, intInitText)
+}
+`, intInitText)
 
 	}
 
@@ -292,7 +293,7 @@ func generateMarshalMethods(genD *ast.GenDecl, structName string) (text string, 
 			continue
 		}
 
-		for _, field := range currStruct.Fields.List {
+		for idxField, field := range currStruct.Fields.List {
 			if len(field.Names) == 0 {
 				continue
 			}
@@ -318,6 +319,10 @@ func generateMarshalMethods(genD *ast.GenDecl, structName string) (text string, 
 				}
 			}
 
+			if idxField != 0 {
+				structText += "\n"
+			}
+
 			if field.Tag != nil {
 				tag := reflect.StructTag(field.Tag.Value[1 : len(field.Tag.Value)-1])
 				tagVal := tag.Get("mfjson")
@@ -325,7 +330,7 @@ func generateMarshalMethods(genD *ast.GenDecl, structName string) (text string, 
 					//*****************
 					structText += fmt.Sprintf("\t// %v %v %v\n", field.Names[0].Name, fieldRawType, field.Tag.Value)
 					if isArray {
-						structText += fmt.Sprintf("\t%v [%v]mfj.IStructView %v\n\n", field.Names[0].Name, arrLen, field.Tag.Value)
+						structText += fmt.Sprintf("\t%v [%v]mfj.IStructView %v\n", field.Names[0].Name, arrLen, field.Tag.Value)
 						swlStr := ""
 						ulStr := ""
 						if arrLen == "" {
@@ -404,7 +409,7 @@ func generateMarshalMethods(genD *ast.GenDecl, structName string) (text string, 
 							fieldType, structName, field.Names[0].Name,
 							field.Names[0].Name, field.Names[0].Name)
 					} else if isMap {
-						structText += fmt.Sprintf("\t%v map[%v]mfj.IStructView %v\n\n", field.Names[0].Name, mapKeyType, field.Tag.Value)
+						structText += fmt.Sprintf("\t%v map[%v]mfj.IStructView %v\n", field.Names[0].Name, mapKeyType, field.Tag.Value)
 
 						swlStr := fmt.Sprintf("swl := make(map[%v]mfj.IStructView, len(obj.%v))", mapKeyType, field.Names[0].Name)
 						ulStr := fmt.Sprintf("obj.%v = make(%v, len(tmp.%v))", field.Names[0].Name, fieldRawType, field.Names[0].Name)
@@ -477,7 +482,7 @@ func generateMarshalMethods(genD *ast.GenDecl, structName string) (text string, 
 							fieldType, structName, field.Names[0].Name,
 							field.Names[0].Name)
 					} else {
-						structText += fmt.Sprintf("\t%v mfj.IStructView %v\n\n", field.Names[0].Name, field.Tag.Value)
+						structText += fmt.Sprintf("\t%v mfj.IStructView %v\n", field.Names[0].Name, field.Tag.Value)
 						marshalText += fmt.Sprintf(`	{
 		if ujo, ok := obj.%v.(mfj.JsonInterfaceMarshaller); ok {
 			sw := mfj.IStructView{}
@@ -531,18 +536,18 @@ func generateMarshalMethods(genD *ast.GenDecl, structName string) (text string, 
 					}
 					//*****************
 				} else {
-					structText += fmt.Sprintf("\t%v %v %v\n\n", field.Names[0].Name, fieldRawType, field.Tag.Value)
+					structText += fmt.Sprintf("\t%v %v %v\n", field.Names[0].Name, fieldRawType, field.Tag.Value)
 					marshalText += fmt.Sprintf("\tout.%v = obj.%v\n", field.Names[0].Name, field.Names[0].Name)
 					unmarshalText += fmt.Sprintf("\tobj.%v = tmp.%v\n", field.Names[0].Name, field.Names[0].Name)
 				}
 			} else {
-				structText += fmt.Sprintf("\t%v %v\n\n", field.Names[0].Name, fieldRawType)
+				structText += fmt.Sprintf("\t%v %v\n", field.Names[0].Name, fieldRawType)
 				marshalText += fmt.Sprintf("\tout.%v = obj.%v\n", field.Names[0].Name, field.Names[0].Name)
 				unmarshalText += fmt.Sprintf("\tobj.%v = tmp.%v\n", field.Names[0].Name, field.Names[0].Name)
 			}
 		}
 	}
-	structText += "}\n"
+	structText += "}\n\n"
 	marshalText +=
 		`	return json.Marshal(out)
 }
