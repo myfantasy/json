@@ -62,3 +62,111 @@ func TestMarshalAndUnmarshal(t *testing.T) {
 			string(body), string(body2))
 	}
 }
+
+func TestMarshalAndUnmarshalArray(t *testing.T) {
+	var p *A
+	exIn := make(AasList, 3)
+	exIn[0] = &A{2, 4}
+	exIn[1] = &B{"32", 34}
+	exIn[2] = p
+
+	body, err := json.Marshal(exIn)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	exOut := AasList{}
+	err = json.Unmarshal(body, &exOut)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	body2, err := json.Marshal(exOut)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if string(body) != string(body2) {
+		t.Fatalf("%v\n\n%v",
+			string(body), string(body2))
+	}
+}
+
+func TestMarshalAndUnmarshalArrayNil(t *testing.T) {
+	var exIn AasList
+
+	body, err := json.Marshal(exIn)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	exOut := AasList{}
+	err = json.Unmarshal(body, &exOut)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	body2, err := json.Marshal(exOut)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if string(body) != string(body2) {
+		t.Fatalf("%v\n\n%v",
+			string(body), string(body2))
+	}
+}
+
+func TestMarshalAndUnmarshalMap(t *testing.T) {
+	var p *A
+	exIn := make(AasMap, 3)
+	exIn["a"] = &A{2, 4}
+	exIn["b"] = &B{"32", 34}
+	exIn["c"] = p
+
+	body, err := json.Marshal(exIn)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	exOut := AasMap{}
+	err = json.Unmarshal(body, &exOut)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	body2, err := json.Marshal(exOut)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if string(body) != string(body2) {
+		t.Fatalf("%v\n\n%v",
+			string(body), string(body2))
+	}
+}
+
+func TestMarshalAndUnmarshalMapNil(t *testing.T) {
+	var exIn AasMap
+
+	body, err := json.Marshal(exIn)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	exOut := AasMap{}
+	err = json.Unmarshal(body, &exOut)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	body2, err := json.Marshal(exOut)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if string(body) != string(body2) {
+		t.Fatalf("%v\n\n%v",
+			string(body), string(body2))
+	}
+}

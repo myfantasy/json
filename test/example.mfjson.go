@@ -13,6 +13,7 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
+//easyjson:json
 type Example_mjson_wrap struct {
 	A int `json:"id"`
 
@@ -34,10 +35,6 @@ type Example_mjson_wrap struct {
 
 	// H map[string]TestInt2 `json:"h" mfjson:"true"`
 	H map[string]mfj.IStructView `json:"h" mfjson:"true"`
-
-	I []TestInt2
-
-	J map[int]TestInt2
 
 	K []log.Level
 
@@ -127,8 +124,6 @@ func (obj Example) MarshalJSON() (res []byte, err error) {
 			out.H = swl
 		}
 	}
-	out.I = obj.I
-	out.J = obj.J
 	out.K = obj.K
 	out.L = obj.L
 	out.M = obj.M
@@ -327,8 +322,6 @@ func (obj *Example) UnmarshalJSON(data []byte) (err error) {
 			}
 		}
 	}
-	obj.I = tmp.I
-	obj.J = tmp.J
 	obj.K = tmp.K
 	obj.L = tmp.L
 	obj.M = tmp.M
@@ -390,6 +383,147 @@ func (obj *Example) UnmarshalJSON(data []byte) (err error) {
 				return err
 			}
 			obj.Q = toTrans
+		}
+	}
+	return nil
+}
+
+type AasList_mjson_wrap []mfj.IStructView
+
+func (obj AasList) MarshalJSON() (res []byte, err error) {
+	if obj == nil {
+		var out AasList_mjson_wrap
+		return json.Marshal(out)
+	}
+	out := make(AasList_mjson_wrap, len(obj))
+	swl := make([]mfj.IStructView, len(obj))
+	for i := 0; i < len(obj); i++ {
+		if ujo, ok := obj[i].(mfj.JsonInterfaceMarshaller); ok {
+			sw := mfj.IStructView{}
+			sw.Type = ujo.UnmarshalJSONTypeName()
+			sw.Data, err = json.Marshal(obj[i])
+			swl[i] = sw
+		} else {
+			swl[i] = mfj.IStructView{}
+		}
+	}
+
+	return json.Marshal(out)
+}
+func (obj *AasList) UnmarshalJSON(data []byte) (err error) {
+	if data == nil {
+		return nil
+	}
+	var tmp AasList_mjson_wrap
+	err = json.Unmarshal(data, &tmp)
+	if err != nil {
+		return err
+	}
+	if tmp == nil {
+		var d AasList
+		*obj = d
+		return nil
+	}
+	objRaw := make(AasList, len(tmp))
+	*obj = objRaw
+	for i := 0; i < len(tmp); i++ {
+		if tmp[i].Type == "" {
+			objRaw[i] = nil
+		} else if tmp[i].Data == nil {
+			to, er0 := mfj.GlobalStructFactory.GetNil(tmp[i].Type)
+			if er0 != nil {
+				return er0
+			}
+			toTrans, ok := to.(TestInt1)
+			if !ok {
+				return mft.ErrorS("Type 'TestInt1' not valid in generations 'AasList' (ARR, NIL)")
+			}
+			objRaw[i] = toTrans
+		} else {
+			to, er0 := mfj.GlobalStructFactory.Get(tmp[i].Type)
+			if er0 != nil {
+				return er0
+			}
+			toTrans, ok := to.(TestInt1)
+			if !ok {
+				return mft.ErrorS("Type 'TestInt1' not valid in generations 'AasList' (ARR)")
+			}
+			err = json.Unmarshal(tmp[i].Data, &toTrans)
+			if err != nil {
+				return err
+			}
+			objRaw[i] = toTrans
+		}
+	}
+	return nil
+}
+
+//easyjson:json
+type AasMap_mjson_wrap map[string]mfj.IStructView
+
+func (obj AasMap) MarshalJSON() (res []byte, err error) {
+	if obj == nil {
+		var out AasMap_mjson_wrap
+		return json.Marshal(out)
+	}
+	out := make(AasMap_mjson_wrap, len(obj))
+	swl := make(map[string]mfj.IStructView, len(obj))
+	for k, v := range obj {
+		if ujo, ok := v.(mfj.JsonInterfaceMarshaller); ok {
+			sw := mfj.IStructView{}
+			sw.Type = ujo.UnmarshalJSONTypeName()
+			sw.Data, err = json.Marshal(v)
+			swl[k] = sw
+		} else {
+			swl[k] = mfj.IStructView{}
+		}
+	}
+
+	return json.Marshal(out)
+}
+func (obj *AasMap) UnmarshalJSON(data []byte) (err error) {
+	if data == nil {
+		return nil
+	}
+	var tmp AasMap_mjson_wrap
+	err = json.Unmarshal(data, &tmp)
+	if err != nil {
+		return err
+	}
+	if tmp == nil {
+		var d AasMap
+		*obj = d
+		return nil
+	}
+	objRaw := make(AasMap, len(tmp))
+	*obj = objRaw
+	for k, v := range tmp {
+		if v.Type == "" {
+			objRaw[k] = nil
+		} else if v.Data == nil {
+			to, er0 := mfj.GlobalStructFactory.GetNil(v.Type)
+			if er0 != nil {
+				return er0
+			}
+			toTrans, ok := to.(TestInt1)
+			if !ok {
+				return mft.ErrorS("Type 'TestInt1' not valid in generations 'AasMap' (ARR, NIL)")
+			}
+			objRaw[k] = toTrans
+		} else {
+			to, er0 := mfj.GlobalStructFactory.Get(v.Type)
+			if er0 != nil {
+				return er0
+			}
+			toTrans, ok := to.(TestInt1)
+			if !ok {
+				return mft.ErrorS("Type 'TestInt1' not valid in generations 'AasMap' (ARR)")
+			}
+			err = json.Unmarshal(v.Data, &toTrans)
+			if err != nil {
+				return err
+			}
+			objRaw[k] = toTrans
 		}
 	}
 	return nil

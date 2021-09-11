@@ -5,6 +5,8 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
+//go:generate easyjson example.mfjson.go
+
 type A struct {
 	A int
 	B float64
@@ -23,12 +25,10 @@ type C struct {
 }
 
 type TestInt1 interface {
-	mfj.JsonInterfaceMarshaller
 	BlaName() string
 }
 
 type TestInt2 interface {
-	UnmarshalJSONTypeName() string
 	BlaName() string
 }
 
@@ -53,6 +53,7 @@ func (b *C) BlaName() string {
 	return "C_BlaName"
 }
 
+//mfjson:add //easyjson:json
 //mfjson:marshal
 type Example struct {
 	A int `json:"id"`
@@ -63,8 +64,8 @@ type Example struct {
 	F log.Level
 	G []TestInt2          `json:"g" mfjson:"true"`
 	H map[string]TestInt2 `json:"h" mfjson:"true"`
-	I []TestInt2
-	J map[int]TestInt2
+	//I []TestInt2
+	//J map[int]TestInt2
 	K []log.Level
 	L map[int]log.Level
 	M [][]*log.Level
@@ -73,3 +74,10 @@ type Example struct {
 	P TestInt2 `json:"p" mfjson:"true"`
 	Q TestInt2 `json:"q" mfjson:"true"`
 }
+
+//mfjson:marshal
+type AasList []TestInt1
+
+//mfjson:add //easyjson:json
+//mfjson:marshal
+type AasMap map[string]TestInt1
