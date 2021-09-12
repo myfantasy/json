@@ -73,6 +73,7 @@ type Example struct {
 	O [4]*log.Level
 	P TestInt2 `json:"p" mfjson:"true"`
 	Q TestInt2 `json:"q" mfjson:"true"`
+	r TestInt2
 }
 
 //mfjson:marshal

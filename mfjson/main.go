@@ -581,6 +581,9 @@ func generateMarshalMethods(genD *ast.GenDecl, structName string, commList []str
 			if len(field.Names) == 0 {
 				continue
 			}
+			if strings.ToLower(field.Names[0].Name[0:1]) == field.Names[0].Name[0:1] {
+				continue
+			}
 			var fieldType string
 			var fieldRawType string
 			var arrLen string
