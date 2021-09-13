@@ -34,18 +34,18 @@ var GlobalStructFactory = &StructFactory{
 
 func (jsf *StructFactory) Add(name string, generator JsonUnmarshalObjectGenerate) {
 	jsf.mx.Lock()
-	jsf.mx.Unlock()
+	defer jsf.mx.Unlock()
 	jsf.Generators[name] = generator
 }
 func (jsf *StructFactory) AddNil(name string, generator JsonUnmarshalObjectGenerate) {
 	jsf.mx.Lock()
-	jsf.mx.Unlock()
+	defer jsf.mx.Unlock()
 	jsf.GeneratorsNil[name] = generator
 }
 
 func (jsf *StructFactory) Get(name string) (obj interface{}, err *mft.Error) {
 	jsf.mx.RLock()
-	jsf.mx.RUnlock()
+	defer jsf.mx.RUnlock()
 	fn, ok := jsf.Generators[name]
 	if !ok {
 		return nil, mft.ErrorSf("Not found object generator for `%v`", name)
@@ -55,7 +55,7 @@ func (jsf *StructFactory) Get(name string) (obj interface{}, err *mft.Error) {
 
 func (jsf *StructFactory) GetNil(name string) (obj interface{}, err *mft.Error) {
 	jsf.mx.RLock()
-	jsf.mx.RUnlock()
+	defer jsf.mx.RUnlock()
 	fn, ok := jsf.GeneratorsNil[name]
 	if !ok {
 		return nil, mft.ErrorSf("Not found nil object generator for `%v`", name)
