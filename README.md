@@ -7,6 +7,8 @@ The mfjson package provides marshal/unmarshal for objects containing interface f
 
 `//mfjson:add //easyjson:json` - Add additional comment to proxy class
 
+`//mfjson:marshal` - Mark struct as marshable with mfjson
+
 `mfjson:"true"` - Marks fiels as interfacable. The field will marshal with generator
 
 
@@ -14,7 +16,8 @@ The mfjson package provides marshal/unmarshal for objects containing interface f
 ### Run code gen
 ```sh
 # install
-go get -u github.com/myfantasy/json/...
+go get -u github.com/myfantasy/json/
+go install github.com/myfantasy/json/mfjson
 
 # run
 mfjson <file>.go
