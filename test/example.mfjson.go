@@ -466,7 +466,6 @@ func (obj AasMap) MarshalJSON() (res []byte, err error) {
 		var out AasMap_mfjson_wrap
 		return json.Marshal(out)
 	}
-	out := make(AasMap_mfjson_wrap, len(obj))
 	swl := make(map[string]mfj.IStructView, len(obj))
 	for k, v := range obj {
 		if ujo, ok := v.(mfj.JsonInterfaceMarshaller); ok {
@@ -479,7 +478,7 @@ func (obj AasMap) MarshalJSON() (res []byte, err error) {
 		}
 	}
 
-	return json.Marshal(out)
+	return json.Marshal(swl)
 }
 func (obj *AasMap) UnmarshalJSON(data []byte) (err error) {
 	if data == nil {

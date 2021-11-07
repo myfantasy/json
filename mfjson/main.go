@@ -468,7 +468,6 @@ func generateMarshalMapMethods(mapType *ast.MapType, structName string, commList
 		var out %v
 		return json.Marshal(out)
 	}
-	out := make(%v, len(obj))
 	`+swlStr+`
 	for k, v := range obj {
 		if ujo, ok := v.(mfj.JsonInterfaceMarshaller); ok {
@@ -481,9 +480,9 @@ func generateMarshalMapMethods(mapType *ast.MapType, structName string, commList
 		}
 	}
 
-	return json.Marshal(out)
+	return json.Marshal(swl)
 }
-`, structName, newStructName, newStructName)
+`, structName, newStructName)
 
 	unmarshalText := fmt.Sprintf(`func (obj *%v) UnmarshalJSON(data []byte) (err error) {
 	if data == nil {
