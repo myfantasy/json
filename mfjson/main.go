@@ -474,6 +474,9 @@ func generateMarshalMapMethods(mapType *ast.MapType, structName string, commList
 			sw := mfj.IStructView{}
 			sw.Type = ujo.UnmarshalJSONTypeName()
 			sw.Data, err = json.Marshal(v)
+			if err != nil {
+				return nil, err
+			}
 			swl[k] = sw
 		} else {
 			swl[k] = mfj.IStructView{}
@@ -709,6 +712,9 @@ func generateMarshalMethods(genD *ast.GenDecl, structName string, commList []str
 					sw := mfj.IStructView{}
 					sw.Type = ujo.UnmarshalJSONTypeName()
 					sw.Data, err = json.Marshal(v)
+					if err != nil {
+						return nil, err
+					}
 					swl[k] = sw
 				} else {
 					swl[k] = mfj.IStructView{}

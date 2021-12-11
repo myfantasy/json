@@ -116,6 +116,9 @@ func (obj Example) MarshalJSON() (res []byte, err error) {
 					sw := mfj.IStructView{}
 					sw.Type = ujo.UnmarshalJSONTypeName()
 					sw.Data, err = json.Marshal(v)
+					if err != nil {
+						return nil, err
+					}
 					swl[k] = sw
 				} else {
 					swl[k] = mfj.IStructView{}
@@ -472,6 +475,9 @@ func (obj AasMap) MarshalJSON() (res []byte, err error) {
 			sw := mfj.IStructView{}
 			sw.Type = ujo.UnmarshalJSONTypeName()
 			sw.Data, err = json.Marshal(v)
+			if err != nil {
+				return nil, err
+			}
 			swl[k] = sw
 		} else {
 			swl[k] = mfj.IStructView{}
